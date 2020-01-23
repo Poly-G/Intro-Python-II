@@ -1,8 +1,7 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
-
-# Dictonary of rooms, key:values = name: description
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -27,7 +26,6 @@ earlier adventurers. The only exit is to the south."""),
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
-# room['outside'].s_to = none
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
 room['foyer'].e_to = room['narrow']
@@ -40,27 +38,53 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+def play_game():
+    print(f"you are currently at, {player.current_room}")
+
+    direction = input("Where would you like to go? ").lower()
+    try:
+        if direction == "n":
+            player.current_room = player.current_room.n_to
+
+        elif direction == "s":
+            player.current_room = player.current_room.s_to
+
+        elif direction == "e":
+            player.current_room = player.current_room.e_to
+
+        elif direction == "w":
+            player.current_room = player.current_room.w_to
+        
+        elif direction == "q":
+            print("Game over")
+            quit()
+        else:
+            print("not a correct key, Game Over")
+            quit()
+    except AttributeError:
+            print("no room to go to, invalid move")
+
 # Make a new player object that is currently in the 'outside' room.
-my_player = Player(Player("attributes", Room("courtyard", room["courtyard"]) ))
+name = input("Enter your name: ")
+print(f'Welcome {name}, in order to play you must enter in: n s w e to move around')
+player = Player(name, room['outside'])
+
+isPlaying = True 
+while isPlaying:
+    play_game()
+
 
 # Write a loop that:
 #
 # * Prints the current room name
-print(my_player.room.name)
+
 # * Prints the current description (the textwrap module might be useful here).
-print(my_player.room.description)
+
 # * Waits for user input and decides what to do.
-direction = input("prompt").lower()
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
-#checkout switch statements 
-if dir == "n"
-    # move north
-    # 1. is there a north? (.n_to NOT None)
-        # print appropriate error message
-    # 2. There isnt a north :(
-        #print 
-elif...
 #
 # If the user enters "q", quit the game.
+
+
